@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { Link, router } from 'expo-router';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
-import { auth, db } from './lib/firebase';
+import { auth, db, updateUserProfile } from './lib/firebase';
 import { AuthInput } from './components/auth/AuthInput';
 
 export default function SignUp() {
@@ -21,6 +21,9 @@ export default function SignUp() {
       
       // Create user account
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      
+      // Update the user profile with display name
+      await updateUserProfile(displayName);
       
       // Create user profile in Firestore
       await setDoc(doc(db, 'users', userCredential.user.uid), {

@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, initializeAuth } from 'firebase/auth';
+import { getAuth, initializeAuth, updateProfile } from 'firebase/auth';
 import { getReactNativePersistence } from 'firebase/auth/react-native';
 import { getFirestore } from 'firebase/firestore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -25,4 +25,22 @@ const db = getFirestore(app);
 
 const storage = getStorage(app);
 
-export { auth, db, storage }; 
+// Function to update user profile
+const updateUserProfile = async (displayName: string, photoURL?: string) => {
+    const user = auth.currentUser;
+    if (user) {
+        try {
+            await updateProfile(user, { 
+                displayName,
+                photoURL: photoURL || user.photoURL 
+            });
+            return true;
+        } catch (error) {
+            console.error("Error updating profile: ", error);
+            throw error;
+        }
+    }
+    return false;
+};
+
+export { auth, db, storage, updateUserProfile }; 
