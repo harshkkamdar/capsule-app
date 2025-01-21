@@ -9,7 +9,7 @@ interface HeaderProps {
   variant?: HeaderVariant
 }
 
-export default function Header({ variant = "memories" }: HeaderProps) {
+export default function Header({ variant = "memories", onRefresh }: HeaderProps & { onRefresh?: () => void }) {
   const router = useRouter()
   const pathname = usePathname()
   const isPostDetail = pathname.includes("/properties/")
@@ -23,12 +23,6 @@ export default function Header({ variant = "memories" }: HeaderProps) {
       <View className="flex-row items-center justify-between px-4 h-16 bg-white border-b border-gray-100">
         <Text className="font-['DM-Sans-Bold'] text-xl text-[#264653]">Create a New Post</Text>
         <View className="flex-row items-center gap-4">
-          <TouchableOpacity>
-            <Ionicons name="notifications-outline" size={24} color="#264653" />
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Ionicons name="settings-outline" size={24} color="#264653" />
-          </TouchableOpacity>
         </View>
       </View>
     )
@@ -42,9 +36,9 @@ export default function Header({ variant = "memories" }: HeaderProps) {
           <TouchableOpacity>
             <Ionicons name="notifications-outline" size={24} color="#264653" />
           </TouchableOpacity>
-          <TouchableOpacity>
+          {/* <TouchableOpacity>
             <Ionicons name="settings-outline" size={24} color="#264653" />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </View>
     )
@@ -58,6 +52,22 @@ export default function Header({ variant = "memories" }: HeaderProps) {
         </TouchableOpacity>
         <Text className="font-['DM-Sans-Bold'] text-lg text-[#264653]">March 15, 2024</Text>
         <View className="w-8" /> {/* Spacer for alignment */}
+      </View>
+    )
+  }
+
+  if (variant === "memories") {
+    return (
+      <View className="flex-row items-center justify-between px-4 h-16 bg-white border-b border-gray-100">
+        <Text className="font-['DM-Sans-Bold'] text-xl text-[#264653]">Memories</Text>
+        <View className="flex-row items-center gap-4">
+          <TouchableOpacity onPress={onRefresh}>
+            <Ionicons name="refresh-outline" size={24} color="#264653" />
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Ionicons name="notifications-outline" size={24} color="#264653" />
+          </TouchableOpacity>
+        </View>
       </View>
     )
   }

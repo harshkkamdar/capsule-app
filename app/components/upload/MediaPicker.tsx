@@ -44,7 +44,7 @@ export const MediaPicker = ({ onMediaSelect }: MediaPickerProps) => {
         <Text className="text-gray-600 mt-2">Select Photos or Videos</Text>
       </TouchableOpacity>
 
-      {selectedMedia.length > 0 && (
+      {/* {selectedMedia.length > 0 && (
         <ScrollView horizontal className="mt-4" showsHorizontalScrollIndicator={false}>
           {selectedMedia.map((media, index) => (
             <View key={index} className="mr-2">
@@ -60,7 +60,7 @@ export const MediaPicker = ({ onMediaSelect }: MediaPickerProps) => {
             </View>
           ))}
         </ScrollView>
-      )}
+      )} */}
     </View>
   );
 }; 

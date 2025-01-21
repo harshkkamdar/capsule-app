@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 interface TagInputProps {
   onTagsChange: (tags: string[]) => void;
+  initialTags?: string[];
 }
 
 export const TagInput = ({ onTagsChange }: TagInputProps) => {
