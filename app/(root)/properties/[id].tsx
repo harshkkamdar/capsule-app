@@ -4,7 +4,7 @@ import { useLocalSearchParams } from 'expo-router'
 import { doc, getDoc } from 'firebase/firestore'
 import { db } from '../../lib/firebase'
 import { Ionicons } from '@expo/vector-icons'
-import ImageSlider from '../../components/posts/ImageSlider'
+import ImageSlider2 from '../../components/posts/ImageSlider2'
 
 interface Post {
     id: string
@@ -45,7 +45,7 @@ export default function Property() {
 
     return (
         <ScrollView className="flex-1 bg-white">
-            <ImageSlider images={post.mediaUrls} height={400} />
+            <ImageSlider2 images={post.mediaUrls} height={400} />
 
             {/* Post Details */}
             <View className="p-6">
