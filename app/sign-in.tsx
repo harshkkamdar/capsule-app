@@ -1,14 +1,13 @@
-
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
     ActivityIndicator,
-  Alert,
-  Image,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
+    Alert,
+    Image,
+    ScrollView,
+    Text,
+    TouchableOpacity,
+    View,
 } from "react-native";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from './lib/firebase';
@@ -58,22 +57,11 @@ const SignIn = () => {
     }
 
     return (
-        <SafeAreaView className="bg-white h-full">
-            <ScrollView contentContainerStyle={{ height: "100%" }}>
-                <Image
-                    source={images.onboarding}
-                    className="w-full h-4/6"
-                    resizeMode="contain"
-                />
-
-                <View className="px-10">
-                    <Text className="text-base text-center uppercase font-rubik text-black-200">
-                        Welcome Back
-                    </Text>
-
-                    <Text className="text-3xl font-rubik-bold text-black-300 text-center mt-2">
-                        Sign in to continue
-                    </Text>
+        <SafeAreaView className="bg-accent-100 h-full">
+            <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
+                <View className="mb-10 px-6"> {/* Changed padding from px-10 to px-6 */}
+                    <Text className="font-['Inter'] text-3xl font-bold mb-2 text-center">Welcome Back</Text>
+                    <Text className="font-['DM Sans'] text-gray-600 text-center">Sign In</Text>
 
                     <AuthInput
                         label="Email"
@@ -91,13 +79,13 @@ const SignIn = () => {
                     />
 
                     {error && (
-                        <Text className="text-red-500 mb-4">{error}</Text>
+                        <Text className="text-danger mb-4">{error}</Text>
                     )}
 
                     <TouchableOpacity
                         onPress={handleSignIn}
                         disabled={loading}
-                        className="bg-black py-4 rounded-lg items-center"
+                        className="bg-primary-300 py-4 rounded-lg items-center"
                     >
                         {loading ? (
                             <ActivityIndicator color="white" />

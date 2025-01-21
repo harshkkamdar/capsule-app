@@ -137,24 +137,25 @@ export default function MemoriesScreen() {
         <View className="flex-row items-center justify-center">
           {/* Left card */}
           <View className="flex-1 items-end">
-            <TouchableOpacity
-              onPress={() => router.push(`/properties/${post.id}`)}
-              style={{ width: cardWidth }}
-              className={`${isEven ? "opacity-100" : "opacity-0"}`}
-            >
-              <View className="bg-white rounded-2xl shadow-sm overflow-hidden border border-accent-100">
-                <ImageSlider images={post.mediaUrls} height={120} />
-                <View className="p-3">
-                  <Text className="font-rubik-medium text-black-300 text-center text-sm">
-                    {post.datetime.toLocaleDateString("en-US", {
-                      month: "short",
-                      day: "numeric",
-                      year: "numeric",
-                    })}
-                  </Text>
+            {isEven && (
+              <TouchableOpacity
+                onPress={() => router.push(`/properties/${post.id}`)}
+                style={{ width: cardWidth }}
+              >
+                <View className="bg-white rounded-2xl shadow-sm overflow-hidden border border-accent-100">
+                  <ImageSlider images={post.mediaUrls} height={120} />
+                  <View className="p-3">
+                    <Text className="font-rubik-medium text-black-300 text-center text-sm">
+                      {post.datetime.toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                        year: "numeric",
+                      })}
+                    </Text>
+                  </View>
                 </View>
-              </View>
-            </TouchableOpacity>
+              </TouchableOpacity>
+            )}
           </View>
 
           {/* Center dot and line */}
@@ -165,24 +166,25 @@ export default function MemoriesScreen() {
 
           {/* Right card */}
           <View className="flex-1 items-start">
-            <TouchableOpacity
-              onPress={() => router.push(`/properties/${post.id}`)}
-              style={{ width: cardWidth }}
-              className={`${!isEven ? "opacity-100" : "opacity-0"}`}
-            >
-              <View className="bg-white rounded-2xl shadow-sm overflow-hidden border border-accent-100">
-                <ImageSlider images={post.mediaUrls} height={120} />
-                <View className="p-3">
-                  <Text className="font-rubik-medium text-black-300 text-center text-sm">
-                    {post.datetime.toLocaleDateString("en-US", {
-                      month: "short",
-                      day: "numeric",
-                      year: "numeric",
-                    })}
-                  </Text>
+            {!isEven && (
+              <TouchableOpacity
+                onPress={() => router.push(`/properties/${post.id}`)}
+                style={{ width: cardWidth }}
+              >
+                <View className="bg-white rounded-2xl shadow-sm overflow-hidden border border-accent-100">
+                  <ImageSlider images={post.mediaUrls} height={120} />
+                  <View className="p-3">
+                    <Text className="font-rubik-medium text-black-300 text-center text-sm">
+                      {post.datetime.toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                        year: "numeric",
+                      })}
+                    </Text>
+                  </View>
                 </View>
-              </View>
-            </TouchableOpacity>
+              </TouchableOpacity>
+            )}
           </View>
         </View>
       </Animated.View>
@@ -202,7 +204,8 @@ export default function MemoriesScreen() {
         renderItem={renderPost}
         keyExtractor={(post) => post.id}
         className="flex-1"
-        contentContainerClassName="py-4"
+        contentContainerClassName="py-4 pb-20"
+        showsVerticalScrollIndicator={false}
       />
     </View>
   )
