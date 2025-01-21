@@ -5,6 +5,7 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { auth, db, updateUserProfile } from './lib/firebase';
 import { AuthInput } from './components/auth/AuthInput';
+import { Ionicons } from "@expo/vector-icons";
 
 export default function SignUp() {
   const [displayName, setDisplayName] = useState('');
@@ -12,6 +13,7 @@ export default function SignUp() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSignUp = async () => {
     try {
@@ -63,13 +65,21 @@ export default function SignUp() {
           placeholder="Enter your email"
         />
 
-        <AuthInput
-          label="Password"
-          value={password}
-          onChangeText={setPassword}
-          placeholder="Create a password"
-          secureTextEntry
-        />
+        <View className="relative">
+          <AuthInput
+            label="Password"
+            value={password}
+            onChangeText={setPassword}
+            placeholder="Create a password"
+            secureTextEntry={!showPassword}
+          />
+          <TouchableOpacity
+            onPress={() => setShowPassword(!showPassword)}
+            className="absolute right-4 top-4"
+          >
+            <Ionicons name={showPassword ? "eye-off" : "eye"} size={24} color="gray" />
+          </TouchableOpacity>
+        </View>
 
         {error && (
           <Text className="text-danger mb-4 text-center">{error}</Text>

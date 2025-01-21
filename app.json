@@ -15,7 +15,13 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE"
+      ],
+      "package": "com.harshkkamdar.capsuleapp"
     },
     "web": {
       "bundler": "metro",
@@ -33,10 +39,24 @@
           "backgroundColor": "#ffffff"
         }
       ],
-      "expo-image-picker"
+      "expo-image-picker",
+      [
+        "expo-file-system",
+        {
+          "enableCaching": true
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "ee71e140-eb61-4f1d-8df3-4f89888c6098"
+      }
     }
   }
 }

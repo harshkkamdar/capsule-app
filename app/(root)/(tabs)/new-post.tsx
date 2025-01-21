@@ -9,7 +9,7 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db, storage, auth } from '../../lib/firebase';
 import Header from "../../components/shared/Header"
 import { PeoplePicker } from '../../components/upload/PeoplePicker';
-import { PredefinedTagInput } from '../../components/upload/PredefinedTagInput';
+import { UserTagInput } from '../../components/upload/UserTagInput';
 import DraggableFlatList from 'react-native-draggable-flatlist';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import ImageSlider from '../../components/posts/ImageSlider';
@@ -193,7 +193,7 @@ export default function NewPostScreen() {
             onPeopleSelect={(people) => setPost(prev => ({ ...prev, people }))}
           />
 
-          <PredefinedTagInput
+          <UserTagInput
             onTagsChange={(tags) => setPost(prev => ({ ...prev, tags }))}
             initialTags={post.tags}
           />

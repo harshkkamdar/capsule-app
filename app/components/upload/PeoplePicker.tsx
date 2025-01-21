@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import React, { useState, useEffect } from 'react';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
 import { db } from '../../lib/firebase';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -18,6 +18,7 @@ interface PeoplePickerProps {
 export const PeoplePicker = ({ onPeopleSelect, selectedPeople }: PeoplePickerProps) => {
   const [users, setUsers] = useState<User[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [peopleDisplayNames, setPeopleDisplayNames] = useState<{[key: string]: string}>({});
 
   useEffect(() => {
     fetchUsers();
@@ -42,6 +43,25 @@ export const PeoplePicker = ({ onPeopleSelect, selectedPeople }: PeoplePickerPro
       : [...selectedPeople, userId];
     onPeopleSelect(newSelected);
   };
+
+  useEffect(() => {
+    const fetchDisplayNames = async () => {
+      if (!selectedPeople.length) return;
+      
+      const names: {[key: string]: string} = {};
+      await Promise.all(
+        selectedPeople.map(async (userId) => {
+          const userDoc = await getDoc(doc(db, 'users', userId));
+          if (userDoc.exists()) {
+            names[userId] = userDoc.data().displayName;
+          }
+        })
+      );
+      setPeopleDisplayNames(names);
+    };
+
+    fetchDisplayNames();
+  }, [selectedPeople]);
 
   return (
     <View className="mb-4">
@@ -70,6 +90,31 @@ export const PeoplePicker = ({ onPeopleSelect, selectedPeople }: PeoplePickerPro
             </TouchableOpacity>
           ))}
         </ScrollView>
+      )}
+
+      {/* Display selected people chips */}
+      {selectedPeople.length > 0 && (
+        <View className="flex-row flex-wrap gap-2 mb-4 mt-4">
+          {selectedPeople.map((personId) => (
+            <View 
+              key={personId} 
+              className="flex-row items-center bg-blue-100 rounded-full px-3 py-1.5"
+            >
+              <Ionicons name="person" size={16} color="#0061FF" />
+              <Text className="text-blue-600 ml-1">
+                {peopleDisplayNames[personId] || 'Loading...'}
+              </Text>
+              <TouchableOpacity
+                onPress={() => {
+                  onPeopleSelect(selectedPeople.filter(id => id !== personId));
+                }}
+                className="ml-1"
+              >
+                <Ionicons name="close-circle" size={16} color="#0061FF" />
+              </TouchableOpacity>
+            </View>
+          ))}
+        </View>
       )}
     </View>
   );

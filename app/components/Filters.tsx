@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { router, useLocalSearchParams } from "expo-router";
-import { Text, ScrollView, TouchableOpacity } from "react-native";
+import { Text, ScrollView, TouchableOpacity, View } from "react-native";
 
 import { categories } from "@/constants/data";
 
@@ -21,34 +21,44 @@ const Filters = () => {
     router.setParams({ filter: category });
   };
 
+  const resetFilters = () => {
+    setSelectedCategory("All");
+    router.setParams({ filter: "All" });
+  };
+
   return (
-    <ScrollView
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      className="mt-3 mb-2"
-    >
-      {categories.map((item, index) => (
-        <TouchableOpacity
-          onPress={() => handleCategoryPress(item.category)}
-          key={index}
-          className={`flex flex-col items-start mr-4 px-4 py-2 rounded-full ${
-            selectedCategory === item.category
-              ? "bg-primary-300"
-              : "bg-primary-100 border border-primary-200"
-          }`}
-        >
-          <Text
-            className={`text-sm ${
+    <View>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        className="mt-3 mb-2"
+      >
+        {categories.map((item, index) => (
+          <TouchableOpacity
+            onPress={() => handleCategoryPress(item.category)}
+            key={index}
+            className={`flex flex-col items-start mr-4 px-4 py-2 rounded-full ${
               selectedCategory === item.category
-                ? "text-white font-rubik-bold mt-0.5"
-                : "text-black-300 font-rubik"
+                ? "bg-primary-300"
+                : "bg-primary-100 border border-primary-200"
             }`}
           >
-            {item.title}
-          </Text>
-        </TouchableOpacity>
-      ))}
-    </ScrollView>
+            <Text
+              className={`text-sm ${
+                selectedCategory === item.category
+                  ? "text-white font-rubik-bold mt-0.5"
+                  : "text-black-300 font-rubik"
+              }`}
+            >
+              {item.title}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
+      <TouchableOpacity onPress={resetFilters} className="bg-red-500 py-2 rounded-lg">
+        <Text className="text-white text-center">Reset All Filters</Text>
+      </TouchableOpacity>
+    </View>
   );
 };
 

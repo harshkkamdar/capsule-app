@@ -57,6 +57,19 @@ export const SearchBar = ({ onSearch }: SearchBarProps) => {
     )
   }
 
+  const clearAllFilters = () => {
+    setSearchText("");
+    setSelectedDate(undefined);
+    setLocation("");
+    setActiveTags([]);
+    onSearch({
+      text: "",
+      date: undefined,
+      location: "",
+      tags: [],
+    });
+  };
+
   return (
     <View className="bg-accent-100 shadow-sm">
       {/* Main Search Bar */}
@@ -149,6 +162,16 @@ export const SearchBar = ({ onSearch }: SearchBarProps) => {
               </View>
             ))}
           </View>
+        )}
+
+        {/* Show clear filters button when any filter is active */}
+        {(searchText || selectedDate || location || activeTags.length > 0) && (
+          <TouchableOpacity
+            onPress={clearAllFilters}
+            className="mt-3 bg-red-500 py-2 px-4 rounded-lg"
+          >
+            <Text className="text-white text-center font-rubik">Clear All Filters</Text>
+          </TouchableOpacity>
         )}
       </View>
 

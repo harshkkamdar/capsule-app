@@ -16,12 +16,14 @@ import { Link, router } from "expo-router";
 import icons from "@/constants/icons";
 import images from "@/constants/images";
 import { AuthInput } from "./components/auth/AuthInput";
+import { Ionicons } from "@expo/vector-icons";
 
 const SignIn = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const { refetch, loading: globalLoading, isLogged } = useGlobalContext();
 
     const handleSignIn = async () => {
@@ -70,13 +72,21 @@ const SignIn = () => {
                         placeholder="Enter your email"
                     />
 
-                    <AuthInput
-                        label="Password"
-                        value={password}
-                        onChangeText={setPassword}
-                        placeholder="Enter your password"
-                        secureTextEntry
-                    />
+                    <View className="relative">
+                        <AuthInput
+                            label="Password"
+                            value={password}
+                            onChangeText={setPassword}
+                            placeholder="Enter your password"
+                            secureTextEntry={!showPassword}
+                        />
+                        <TouchableOpacity
+                            onPress={() => setShowPassword(!showPassword)}
+                            className="absolute right-4 top-4"
+                        >
+                            <Ionicons name={showPassword ? "eye-off" : "eye"} size={24} color="gray" />
+                        </TouchableOpacity>
+                    </View>
 
                     {error && (
                         <Text className="text-danger mb-4">{error}</Text>
