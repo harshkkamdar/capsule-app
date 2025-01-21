@@ -7,6 +7,7 @@ import { Ionicons } from "@expo/vector-icons"
 import ImageSlider from "../../components/posts/ImageSlider"
 import { ref, deleteObject } from "firebase/storage"
 import { useFonts } from "expo-font"
+import Header from "../../components/shared/Header"
 
 interface Post {
   id: string
@@ -18,7 +19,7 @@ interface Post {
   tags: string[]
 }
 
-export default function Index() {
+export default function MemoriesScreen() {
   const [posts, setPosts] = useState<Post[]>([])
   const screenWidth = Dimensions.get("window").width
   const fadeAnim = useRef(new Animated.Value(0)).current
@@ -159,7 +160,8 @@ export default function Index() {
 //   }
 
   return (
-    <View className="flex-1 bg-[#F8F9FA]">
+    <View className="flex-1 bg-white">
+      <Header variant="memories" />
       {/* Center timeline line */}
       <View className="absolute left-1/2 w-[1px] h-full bg-[#2A9D8F]/20" />
 

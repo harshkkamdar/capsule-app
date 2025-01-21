@@ -16,7 +16,7 @@ const Profile = () => {
   return (
     <View className="flex-1 p-4">
       <Text className="text-lg font-bold">{auth.currentUser?.email}</Text>
-      <TouchableOpacity 
+      <TouchableOpacity
         onPress={handleSignOut}
         className="bg-red-500 p-4 rounded-lg mt-4"
       >
