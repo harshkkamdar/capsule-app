@@ -22,6 +22,21 @@ interface Post {
   people?: string[]
 }
 
+const TimelineFooter = () => {
+  return (
+    <View className="items-center py-8">
+      <TouchableOpacity
+        onPress={() => router.push(`/askout`)}
+        className="bg-primary-300 px-8 py-4 rounded-xl"
+      >
+        <Text className="text-white font-rubik-medium text-lg">
+          Press this when you are ready
+        </Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
+
 export default function MemoriesScreen() {
   const [posts, setPosts] = useState<Post[]>([])
   const screenWidth = Dimensions.get("window").width
@@ -75,6 +90,7 @@ export default function MemoriesScreen() {
       );
 
       try {
+        console.log("Fetching posts...");
         const [postsSnapshot, taggedSnapshot] = await Promise.all([
           getDocs(q),
           getDocs(taggedQ)
@@ -86,15 +102,15 @@ export default function MemoriesScreen() {
             ...doc.data(),
             datetime: doc.data().datetime.toDate(),
           })) as Post[];
-
-        // Remove duplicates and sort
+        // Remove duplicates and sort by user-entered datetime
         const uniquePosts = Array.from(
           new Map(allPosts.map(post => [post.id, post])).values()
-        ).sort((a, b) => b.datetime.getTime() - a.datetime.getTime());
+        ).sort((a, b) => b.datetime.getDate() - a.datetime.getDate());
 
         setPosts(uniquePosts);
       } catch (error: any) {
         // Check if the error is due to missing index
+        console.log(error);
         if (error.code === 'failed-precondition') {
           console.warn('Indexes are being built. Please wait a few minutes and try again.');
           // Instead of fetching all posts, fetch only user's posts without compound query
@@ -290,6 +306,7 @@ export default function MemoriesScreen() {
           showsVerticalScrollIndicator={false}
           refreshing={refreshing}
           onRefresh={handleRefresh}
+          ListFooterComponent={TimelineFooter}
         />
       )}
     </View>

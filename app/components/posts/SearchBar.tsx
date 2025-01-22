@@ -25,8 +25,8 @@ export const SearchBar = ({ onSearch }: SearchBarProps) => {
   const filterHeight = useRef(new Animated.Value(0)).current
 
   const commonTags = [
-    "Family", "Friends", "Travel", "Food", "Nature", "Work", 
-    "Celebration", "Adventure", "Milestones"
+    "Friends", "DateNight", "Food", "Drive", 
+    "Hangout", "Movie", "YourHome", "MyHome",
   ]
 
   const toggleFilters = () => {
